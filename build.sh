@@ -18,8 +18,7 @@ mkdir -p "$EXPORT_DIR"
 echo "$GIT_VERSION" > "$PROJECT_PATH/version.txt"
 
 echo "🚀 Exporting Godot project to Web..."
-"$GODOT_EXECUTABLE" --headless --verbose --export-release "$EXPORT_PRESET" "$EXPORT_DIR/index.html"
-
+"$GODOT_EXECUTABLE" --headless --path "$PROJECT_PATH" --verbose --export-release "$EXPORT_PRESET" "../$EXPORT_DIR/index.html"
 echo "✅ Export done. Files in $EXPORT_DIR"
 
 # Upload to itch.io with version tag

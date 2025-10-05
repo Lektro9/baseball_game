@@ -3,10 +3,12 @@ extends Node2D
 @onready var state_chart: StateChart = $StateChart
 @onready var static_body_2d: StaticBody2D = $StaticBody2D
 @onready var base_ball_guy_sprite: AnimatedSprite2D = %BaseBallGuySprite
+@onready var state_chart_debugger: MarginContainer = $StateChartDebugger
 
 func _ready() -> void:
 	base_ball_guy_sprite.frame_changed.connect(on_frame_changed)
-#	static_body_2d.body_entered.connect(_on_ball_hit)
+	if not OS.is_debug_build():
+		state_chart_debugger.hide()
 
 func start_hitting():
 	state_chart.send_event("hit")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://qwcocqrqafx4"]
+[gd_scene load_steps=10 format=3 uid="uid://qwcocqrqafx4"]
 
 [ext_resource type="Texture2D" uid="uid://cy6rqblv41xpv" path="res://images/baseballfield.png" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bc6if62sr4rsj" path="res://scenes/base_ball_machine.tscn" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://dwjfkmh65tfev" path="res://scenes/player.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://b6ucrngoxkv2h" path="res://scenes/kill_area.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://x4exp6b5ihpm" path="res://scenes/version_label.tscn" id="5_tbgi4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7mycd"]
 
@@ -92,5 +93,7 @@ rotation = -3.1357563
 [node name="KillArea2" parent="." instance=ExtResource("5_lquwl")]
 position = Vector2(1352, 553)
 rotation = 6.237609
+
+[node name="VersionLabel" parent="." instance=ExtResource("5_tbgi4")]
 
 [connection signal="button_down" from="UICanvas/HitButton" to="Player" method="start_hitting"]
