@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8wtgxm5v4g64"
-path="res://.godot/imported/baseball_machine.png-1081a18e3ba8615aceb617f26c02eb15.ctex"
+uid="uid://c3ccybm3iju2r"
+path="res://.godot/imported/Spritesheet_baseball.png-c0bf7c891db9a445e153eabb7b4f0b36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://baseball_machine.png"
-dest_files=["res://.godot/imported/baseball_machine.png-1081a18e3ba8615aceb617f26c02eb15.ctex"]
+source_file="res://images/Spritesheet_baseball.png"
+dest_files=["res://.godot/imported/Spritesheet_baseball.png-c0bf7c891db9a445e153eabb7b4f0b36.ctex"]
 
 [params]
 

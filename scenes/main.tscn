@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=3 uid="uid://qwcocqrqafx4"]
+
+[ext_resource type="Texture2D" uid="uid://cy6rqblv41xpv" path="res://images/baseballfield.png" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bc6if62sr4rsj" path="res://scenes/base_ball_machine.tscn" id="2_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://dwjfkmh65tfev" path="res://scenes/player.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://b6ucrngoxkv2h" path="res://scenes/kill_area.tscn" id="5_lquwl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7mycd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lquwl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_272bh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vw27"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BaseBallField" type="Sprite2D" parent="."]
+position = Vector2(196.00002, 100)
+scale = Vector2(1.2744141, 1.2744141)
+texture = ExtResource("1_0xm2m")
+flip_h = true
+
+[node name="BaseBallMachine" parent="." instance=ExtResource("2_jyhfs")]
+position = Vector2(0, 41)
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="HitButton" type="Button" parent="UICanvas"]
+unique_name_in_owner = true
+offset_left = 435.0
+offset_top = 458.0
+offset_right = 641.0
+offset_bottom = 565.0
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7mycd")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_lquwl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_272bh")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5vw27")
+flat = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UICanvas/HitButton"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/bold_font_size = 36
+bbcode_enabled = true
+text = "[wave amp=50.0 freq=15.0 connected=1]PRESS 'J' TO HIT[/wave]"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICanvas/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UICanvas/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 12
+
+[node name="Score" type="Label" parent="UICanvas/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 32
+text = "Score: 0"
+
+[node name="Player" parent="." instance=ExtResource("4_1bvp3")]
+position = Vector2(963, 364)
+
+[node name="KillArea" parent="." instance=ExtResource("5_lquwl")]
+position = Vector2(-1098, 366)
+rotation = -3.1357563
+
+[node name="KillArea2" parent="." instance=ExtResource("5_lquwl")]
+position = Vector2(1352, 553)
+rotation = 6.237609
+
+[connection signal="button_down" from="UICanvas/HitButton" to="Player" method="start_hitting"]

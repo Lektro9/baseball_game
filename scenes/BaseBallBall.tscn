@@ -1,16 +1,35 @@
-[gd_scene load_steps=9 format=3 uid="uid://ekjj7mywbutd"]
+[gd_scene load_steps=10 format=3 uid="uid://ekjj7mywbutd"]
 
-[ext_resource type="Texture2D" uid="uid://b0vb4d1lreqvh" path="res://baseball_atlas.tres" id="1_7on14"]
-[ext_resource type="Script" uid="uid://d4cmi15jcndhq" path="res://base_ball_ball.gd" id="1_tqphj"]
+[ext_resource type="Script" uid="uid://d4cmi15jcndhq" path="res://scripts/base_ball_ball.gd" id="1_tqphj"]
+[ext_resource type="Texture2D" uid="uid://dp87i5ea67aik" path="res://machine_ball_atlas.tres" id="2_u2dut"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tqphj"]
+friction = 0.0
+bounce = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3sgg8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
-atlas = ExtResource("1_7on14")
+atlas = ExtResource("2_u2dut")
 region = Rect2(1065.3079, 644.3835, 260.32922, 266.2458)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1bvp3"]
 radius = 5.0990195
+
+[sub_resource type="Animation" id="Animation_rtswi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/BaseBallSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_tqphj"]
 resource_name = "spin_ball"
@@ -28,29 +47,14 @@ tracks/0/keys = {
 "values": [0.0, 3.141592653589793, 6.283185307179586]
 }
 
-[sub_resource type="Animation" id="Animation_rtswi"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Node2D/BaseBallSprite:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3sgg8"]
 _data = {
 &"RESET": SubResource("Animation_rtswi"),
 &"spin_ball": SubResource("Animation_tqphj")
 }
 
-[node name="BaseBallCharacter" type="CharacterBody2D"]
-motion_mode = 1
+[node name="BaseBallCharacter" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_tqphj")
 script = ExtResource("1_tqphj")
 
 [node name="Node2D" type="Node2D" parent="."]

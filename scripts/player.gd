@@ -1,8 +1,8 @@
 extends Node2D
-@onready var base_ball_guy_sprite: AnimatedSprite2D = $BaseBallGuySprite
 @onready var hitbox: CollisionShape2D = $StaticBody2D/Hitbox
 @onready var state_chart: StateChart = $StateChart
 @onready var static_body_2d: StaticBody2D = $StaticBody2D
+@onready var base_ball_guy_sprite: AnimatedSprite2D = %BaseBallGuySprite
 
 func _ready() -> void:
 	base_ball_guy_sprite.frame_changed.connect(on_frame_changed)
@@ -29,3 +29,12 @@ func _on_ball_hit(body):
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("hit"):
 		start_hitting()
+
+
+func _on_idle_state_entered() -> void:
+	base_ball_guy_sprite.frame = 0
+
+
+func _on_hitting_state_physics_processing(delta: float) -> void:
+	if not base_ball_guy_sprite.is_playing():
+		state_chart.send_event("idle")
