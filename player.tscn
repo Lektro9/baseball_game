@@ -1,0 +1,132 @@
+[gd_scene load_steps=18 format=3 uid="uid://dwjfkmh65tfev"]
+
+[ext_resource type="Script" uid="uid://c0up44usjyrwu" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://c3ccybm3iju2r" path="res://Spritesheet_baseball.png" id="2_i3pqv"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="3_2hs0m"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="4_1jxqw"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="5_dw050"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="6_b26j0"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="7_1jxqw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vw27"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(960, 480, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4c57u"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(0, 960, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(480, 960, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(960, 960, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(1440, 960, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w48qg"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(0, 1440, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vivmo"]
+atlas = ExtResource("2_i3pqv")
+region = Rect2(480, 1440, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_074og"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lquwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vw27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4c57u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efxa6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg77c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycdy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w48qg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vivmo")
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(5.8673553, 122.81897)
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_onrkg")
+
+[node name="BaseBallGuySprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.92031246, 0.92031246)
+sprite_frames = SubResource("SpriteFrames_074og")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Hitbox" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-74, -13.000004)
+rotation = 0.21702066
+scale = Vector2(7.7484603, 1)
+shape = SubResource("RectangleShape2D_lquwl")
+disabled = true
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("3_2hs0m")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("4_1jxqw")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_dw050")
+
+[node name="ToHitting" type="Node" parent="StateChart/Root/Idle"]
+script = ExtResource("6_b26j0")
+to = NodePath("../../Hitting")
+event = &"hit"
+delay_in_seconds = "0.0"
+
+[node name="Hitting" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_dw050")
+
+[node name="ToIdle" type="Node" parent="StateChart/Root/Hitting"]
+script = ExtResource("6_b26j0")
+to = NodePath("../../Idle")
+delay_in_seconds = "0.5"
+
+[node name="Success" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_dw050")
+
+[node name="Failure" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_dw050")
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("7_1jxqw")]
+offset_left = 29.0
+offset_top = -130.0
+offset_right = 182.0
+offset_bottom = 18.0
+initial_node_to_watch = NodePath("../StateChart")
+
+[connection signal="state_entered" from="StateChart/Root/Hitting" to="." method="_on_hitting_state_entered"]
